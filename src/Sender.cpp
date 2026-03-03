@@ -10,9 +10,13 @@ void Sender::Node::run()
   }
 }
 
-void Sender::Node::onDataTimerTick()
+
+  void Sender::Node::onDataTimerTick()
 {
-  UNIMPLEMENTED(__PRETTY_FUNCTION__);
+  data.x += 1.0;
+  data.y += 2.0;
+  data.z += 3.0;
+  data.frame = "map";
 
   data.timestamp =
     static_cast<uint64_t>(std::chrono::system_clock::now().time_since_epoch().count());
@@ -21,7 +25,13 @@ void Sender::Node::onDataTimerTick()
     .port = config.remotePort,
     .address = config.remoteAddress,
   };
-  RCLCPP_INFO(logger, "Sending data to host: '%s:%d'", frame.address.c_str(), frame.port);
 
-  RCLCPP_INFO(logger, "\n\tstamp: %ld", data.timestamp);
+  Utils::Message::serialize(frame, data);
+  send(frame);
+
+  RCLCPP_INFO(logger, "Sending data to host: '%s:%d'", frame.address.c_str(), frame.port);
+  RCLCPP_INFO(logger, "\n\tstamp: %ld\n\tframe: %s\n\tx: %f\n\ty: %f\n\tz: %f",
+    data.timestamp, data.frame.c_str(), data.x, data.y, data.z);
 }
+
+
