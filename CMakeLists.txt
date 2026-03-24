@@ -71,6 +71,10 @@ install(TARGETS keyboard_control DESTINATION lib/${PROJECT_NAME})
 # * * * * * * * * * * * * * * * * *
 # *      Lab 05_localization
 # * * * * * * * * * * * * * * * * *
+add_executable(localization_node src/Localization.cpp src/localization_node.cpp)
+target_link_libraries(localization_node ${PROJECT_NAME})
+ament_target_dependencies(localization_node ${dependencies})
+install(TARGETS localization_node DESTINATION lib/${PROJECT_NAME})
 
 # * * * * * * * * * * * * * * * * *
 # *      Lab 06_planning
