@@ -58,7 +58,7 @@ void PlanningNode::dilateMap() {
     nav_msgs::msg::OccupancyGrid dilatedMap = map_;
     int w = map_.info.width;
     int h = map_.info.height;
-    int radius = 3; // 8 * 0.05m = 0.4m odstup
+    int radius = 4; // 8 * 0.05m = 0.4m odstup
 
     for (int y = 0; y < h; y++) {
         for (int x = 0; x < w; x++) {

@@ -101,6 +101,9 @@ LocalizationNode::LocalizationNode() :
 
     RCLCPP_INFO(get_logger(), "Localization node started. Sim time: %s",
         this->get_parameter("use_sim_time").as_bool() ? "true" : "false");
+        
+odometry_.pose.pose.position.x = -0.5;
+odometry_.pose.pose.position.y = 0.0;
 }
 
 void LocalizationNode::jointCallback(const sensor_msgs::msg::JointState & msg) {
