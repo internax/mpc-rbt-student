@@ -39,6 +39,10 @@ private:
 
     // Publishers
     rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr path_pub_;
+    rclcpp::Publisher<nav_msgs::msg::OccupancyGrid>::SharedPtr dilated_map_pub_;
+    
+    // V Planning.hpp přidej:
+	rclcpp::TimerBase::SharedPtr map_timer_;
 
     // Methods
     void dilateMap();

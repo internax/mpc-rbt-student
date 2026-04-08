@@ -1,0 +1,5 @@
+weebots: ros2 launch src/mpc-rbt-simulator/launch/simulation.launch.py 
+rviz2 a nodes: ros2 launch src/mpc-rbt-student/launch/solution.launch.py 
+pozice: ros2 action send_goal /go_to_goal nav2_msgs/action/NavigateToPose "{pose: {header: {stamp: {sec: 0, nanosec: 0}, frame_id: ''}, pose: {position: {x: -2.7, y: -2.0, z: 0.0}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}}}"
+
+

@@ -113,7 +113,7 @@ void LocalizationNode::jointCallback(const sensor_msgs::msg::JointState & msg) {
 
     if (dt <= 0.0 || dt > 1.0) return;  // zahod nesmyslné dt
 
-    updateOdometry(msg.velocity[0], msg.velocity[1], dt);
+    updateOdometry(msg.velocity[1], msg.velocity[0], dt);    
     publishOdometry();
     publishTransform();
 }
