@@ -12,15 +12,23 @@ struct Pose2D {
 
 class LookupPose : public BT::SyncActionNode {
 public:
-    LookupPose(const std::string& name, const BT::NodeConfig& config)
-        : SyncActionNode(name, config)
+LookupPose(const std::string& name, const BT::NodeConfig& config)
+    : SyncActionNode(name, config)
     {
-        // TODO: Naplňte tabulku souřadnic pose_table_.
-        // Manipulátory: ID "1", "2", "3" (viz tabulka v zadání).
-        // Sklady: ID "A1", "A2", "B1", "B2", "C1", "C2", "D1", "D2" (viz tabulka v zadání).
-        // Příklad: pose_table_["1"] = { 4.5, 1.5 };
+        pose_table_ = {
+            {"1",  {4.5,  1.5}},
+            {"2",  {4.5, -0.5}},
+            {"3",  {4.5, -2.5}},
+            {"A1", {1.5,  0.5}},
+            {"A2", {1.5, -1.5}},
+            {"B1", {-0.5,  0.5}},
+            {"B2", {-0.5, -1.5}},
+            {"C1", {-2.5,  0.5}},
+            {"C2", {-2.5, -1.5}},
+            {"D1", {-4.5,  0.5}},
+            {"D2", {-4.5, -1.5}},
+        };
     }
-
     static BT::PortsList providedPorts()
     {
         return {
@@ -30,13 +38,15 @@ public:
         };
     }
 
-    BT::NodeStatus tick() override
+    BT::NodeStatus tick() override 
     {
-        // TODO: Načtěte location_id z input portu pomocí getInput<std::string>.
-        // Vyhledejte ID v pose_table_. Pokud neexistuje, vraťte FAILURE.
-        // Zapište souřadnice do output portů "x" a "y" pomocí setOutput().
-        // Vraťte SUCCESS.
-        return BT::NodeStatus::FAILURE;
+        auto id = getInput<std::string>("location_id");
+        if (!id) return BT::NodeStatus::FAILURE;
+        auto it = pose_table_.find(id.value());
+        if (it == pose_table_.end()) return BT::NodeStatus::FAILURE;
+        setOutput("x", it->second.x);
+        setOutput("y", it->second.y);
+        return BT::NodeStatus::SUCCESS;
     }
 
 private:

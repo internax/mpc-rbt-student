@@ -24,9 +24,8 @@ public:
 
     BT::NodeStatus onResponseReceived(const Response::SharedPtr& response) override
     {
-        // TODO: Zkontrolujte response->success. Pokud je false, vraťte FAILURE.
-        // Tento node nemá žádný output port – stačí vrátit SUCCESS.
-        return BT::NodeStatus::FAILURE;
+        if (!response->success) return BT::NodeStatus::FAILURE;
+        return BT::NodeStatus::SUCCESS;  // žádný setOutput, nemáme output port
     }
 
     BT::NodeStatus onFailure(BT::ServiceNodeErrorCode error) override

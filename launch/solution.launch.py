@@ -7,6 +7,25 @@ def generate_launch_description():
     package_dir = get_package_share_directory('mpc_rbt_student')
     rviz_config_path = os.path.join(package_dir, 'rviz', 'config_student.rviz')
 
+    warehouse_manager = Node(
+        package='mpc_rbt_student',
+        executable='warehouse_manager',
+        name='warehouse_manager',
+        output='screen',
+        parameters=[{'use_sim_time': True}]
+    )
+
+    bt_server = Node(
+        package='mpc_rbt_student',
+        executable='bt_server',
+        name='bt_server',
+        output='screen',
+        parameters=[
+            {'use_sim_time': True},
+            os.path.join(package_dir, 'config', 'bt_server.yaml')
+        ]
+    )
+
     return LaunchDescription([
         Node(
             package='mpc_rbt_student',
@@ -36,4 +55,6 @@ def generate_launch_description():
             arguments=['-d', rviz_config_path],
             output='screen',
         ),
+        warehouse_manager,
+        bt_server,
     ])
